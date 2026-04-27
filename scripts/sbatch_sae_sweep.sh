@@ -1,13 +1,15 @@
 #!/bin/bash
 #SBATCH --job-name=ecg_sae
-#SBATCH --partition=day
+#SBATCH --partition=education_gpu
+#SBATCH --gres=gpu:1
 #SBATCH --time=12:00:00
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
-#SBATCH --array=0-35
+#SBATCH --array=0-35%2
 #SBATCH --output=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project/logs/sae_%A_%a.out
 set -e
 module load Python/3.12.3-GCCcore-13.3.0 PyTorch/2.7.1-foss-2024a-CUDA-12.6.0 SciPy-bundle/2024.05-gfbf-2024a h5py/3.12.1-foss-2024a matplotlib/3.9.2-gfbf-2024a scikit-learn/1.5.2-gfbf-2024a
+python3 -c "import torch; print(f'[CUDA] available={torch.cuda.is_available()} device={torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"NONE\"}', flush=True)"
 D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project
 cd $D
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-8}
