@@ -1,13 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=ecg_interp
-#SBATCH --partition=nodes
+#SBATCH --partition=day
 #SBATCH --time=8:00:00
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=24G
 #SBATCH --array=0-35
-#SBATCH --output=/beegfs/labs/weinstocklab/projects/ydon268/Collaboration/ECG/slurm_out/interp_%A_%a.out
+#SBATCH --output=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project/logs/interp_%A_%a.out
 set -e
-D=/beegfs/labs/weinstocklab/projects/ydon268/Collaboration/ECG
+module load Python/3.12.3-GCCcore-13.3.0 PyTorch/2.7.1-foss-2024a-CUDA-12.6.0 SciPy-bundle/2024.05-gfbf-2024a h5py/3.12.1-foss-2024a matplotlib/3.9.2-gfbf-2024a scikit-learn/1.5.2-gfbf-2024a
+D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project
 cd $D
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-4}
 
@@ -31,7 +32,7 @@ fi
 # Remove old results to ensure fresh computation
 rm -f $D/results/interp/${TAG}_interp_binary.parquet $D/results/interp/${TAG}_latent_summary.parquet $D/results/interp/${TAG}_top_latents.json $D/results/interp/${TAG}_interp_continuous.parquet
 
-~/.pixi/bin/pixi run python scripts/feature_interp.py \
+python3 scripts/feature_interp.py \
     --sae_ckpt   $D/results/sae/${TAG}.pt \
     --acts       $D/results/activations/${HOOK}_activations.h5 \
     --beat_meta  $D/results/activations/beat_meta.parquet \

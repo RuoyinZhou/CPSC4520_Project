@@ -1,13 +1,14 @@
 #!/bin/bash
 #SBATCH --job-name=ecg_sae
-#SBATCH --partition=nodes
+#SBATCH --partition=day
 #SBATCH --time=12:00:00
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
 #SBATCH --array=0-35
-#SBATCH --output=/beegfs/labs/weinstocklab/projects/ydon268/Collaboration/ECG/slurm_out/sae_%A_%a.out
+#SBATCH --output=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project/logs/sae_%A_%a.out
 set -e
-D=/beegfs/labs/weinstocklab/projects/ydon268/Collaboration/ECG
+module load Python/3.12.3-GCCcore-13.3.0 PyTorch/2.7.1-foss-2024a-CUDA-12.6.0 SciPy-bundle/2024.05-gfbf-2024a h5py/3.12.1-foss-2024a matplotlib/3.9.2-gfbf-2024a scikit-learn/1.5.2-gfbf-2024a
+D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project
 cd $D
 export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK:-8}
 export MKL_NUM_THREADS=${SLURM_CPUS_PER_TASK:-8}
@@ -25,7 +26,7 @@ HOOK=${HOOKS[$H]}
 EXP=${EXPS[$E]}
 KVAL=${KS[$K]}
 echo "config: hook=$HOOK expansion=$EXP k=$KVAL"
-~/.pixi/bin/pixi run python scripts/sae_topk.py \
+python3 scripts/sae_topk.py \
     --acts       $D/results/activations/${HOOK}_activations.h5 \
     --hook       $HOOK \
     --expansion  $EXP --k $KVAL \
