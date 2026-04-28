@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project
+D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/ECG
 cd $D/data
 rm -rf ptbxl ptbxl_plus
 mkdir -p zip && cd zip

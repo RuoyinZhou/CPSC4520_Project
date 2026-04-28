@@ -1,6 +1,6 @@
 #!/bin/bash
 # Watches SLURM + auto-submits downstream jobs when train finishes.
-D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project
+D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/ECG
 LOG=$D/logs/pipeline.log
 TS=$(date +%F_%T)
 

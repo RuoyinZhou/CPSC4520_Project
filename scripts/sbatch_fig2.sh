@@ -4,7 +4,7 @@
 #SBATCH --time=2:00:00
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G
-#SBATCH --output=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project/logs/fig2_%j.out
+#SBATCH --output=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/ECG/logs/fig2_%j.out
 set -e
 module load Python/3.12.3-GCCcore-13.3.0 \
   PyTorch/2.7.1-foss-2024a-CUDA-12.6.0 \
@@ -14,7 +14,7 @@ module load Python/3.12.3-GCCcore-13.3.0 \
   matplotlib/3.9.2-gfbf-2024a \
   scikit-learn/1.5.2-gfbf-2024a
 
-D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/cpsc4520_project
+D=/nfs/roberts/project/cpsc4520/cpsc4520_rz396/ECG
 cd $D
 
 python3 scripts/make_fig2_top_beats.py \
